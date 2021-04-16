@@ -5,19 +5,23 @@ from dotenv import load_dotenv
 from flask import Flask, request
 import pylast
 import json
+import os
 
-load_dotenv()
-API_KEY = os.environ(API_KEY)
-API_SECRET = os.environ(API_SECRET)
-# username = os.environ(USERNAME)
-# password_hash = pylast.md5(os.environ(PASS_HASH))
-username = ""
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+if os.path.exists(dotenv_path):
+    load_dotenv(dotenv_path)
+
+API_KEY = os.environ.get("API_KEY")
+API_SECRET = os.environ.get("API_SECRET")
+# username = os.environ..get("USERNAME")
+PASS_HASH = pylast.md5(os.environ.get("PASS_HASH"))
+USERNAME = ""
 
 network = pylast.LastFMNetwork(
     api_key=API_KEY,
     api_secret=API_SECRET,
-    username=username,
-    password_hash=password_hash,
+    username=USERNAME,
+    password_hash=PASS_HASH,
 )
 
 app = Flask(__name__)
